@@ -28,13 +28,15 @@ export function Header() {
               <img
                 className="h-10 w-10 rounded-full object-cover"
                 src={doctor.imageUrl}
-                alt={doctor.firstName}
+                alt={`${doctor.firstName} ${doctor.lastName}`}
               />
             )}
             <div className="ml-4">
               {doctor && (
                 <>
-                  <h2 className="text-lg font-semibold text-gray-900">Dr. {doctor.firstName} {doctor.lastName}</h2>
+                  <h2 className="text-lg font-semibold text-gray-900">
+                    Dr. {doctor.firstName} {doctor.lastName}
+                  </h2>
                   <p className="text-sm text-gray-500">{doctor.specialty}</p>
                 </>
               )}
@@ -43,9 +45,11 @@ export function Header() {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
-            {/* <a href="/dashboard" className="text-gray-700 hover:text-blue-600">Dashboard</a>
+            {/* Uncomment and update links as needed
+            <a href="/dashboard" className="text-gray-700 hover:text-blue-600">Dashboard</a>
             <a href="/patients" className="text-gray-700 hover:text-blue-600">Patients</a>
-            <a href="/appointments" className="text-gray-700 hover:text-blue-600">Appointments</a> */}
+            <a href="/appointments" className="text-gray-700 hover:text-blue-600">Appointments</a>
+            */}
             <button
               onClick={handleLogout}
               className="flex items-center text-gray-700 hover:text-red-600"
@@ -69,9 +73,11 @@ export function Header() {
       {isMenuOpen && (
         <div className="md:hidden">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+            {/* Uncomment and update links as needed
             <a href="/dashboard" className="block px-3 py-2 text-gray-700 hover:text-blue-600">Dashboard</a>
             <a href="/patients" className="block px-3 py-2 text-gray-700 hover:text-blue-600">Patients</a>
             <a href="/appointments" className="block px-3 py-2 text-gray-700 hover:text-blue-600">Appointments</a>
+            */}
             <button
               onClick={handleLogout}
               className="w-full text-left px-3 py-2 text-gray-700 hover:text-red-600"

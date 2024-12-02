@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 
 type Doctor = {
+  id: string;
   firstName: string;
   lastName: string;
   imageUrl?: string; // Optional if not always present

@@ -12,7 +12,10 @@ export function Header() {
     showModal({
       title: 'Confirm Logout',
       message: 'Are you sure you want to logout?',
-      onConfirm: logout,
+      onConfirm: () => {
+        logout();
+        window.location.href = 'https://medical-webpage-front.vercel.app/';
+      },
     });
   };
 
@@ -21,14 +24,20 @@ export function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16 items-center">
           <div className="flex items-center">
-            <img
-              className="h-10 w-10 rounded-full object-cover"
-              src={doctor.imageUrl}
-              alt={doctor.name}
-            />
+            {doctor?.imageUrl && (
+              <img
+                className="h-10 w-10 rounded-full object-cover"
+                src={doctor.imageUrl}
+                alt={doctor.firstName}
+              />
+            )}
             <div className="ml-4">
-              <h2 className="text-lg font-semibold text-gray-900">{doctor.name}</h2>
-              <p className="text-sm text-gray-500">{doctor.specialty}</p>
+              {doctor && (
+                <>
+                  <h2 className="text-lg font-semibold text-gray-900">Dr. {doctor.firstName} {doctor.lastName}</h2>
+                  <p className="text-sm text-gray-500">{doctor.specialty}</p>
+                </>
+              )}
             </div>
           </div>
 

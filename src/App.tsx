@@ -7,10 +7,43 @@ import { PatientDetails } from './components/patients/PatientDetails';
 import { PrescriptionForm } from './components/prescriptions/PrescriptionForm';
 import { Patient } from './types';
 import { X } from 'lucide-react';
-import { useAuth } from './hooks/useAuth';
+
+// Mock data
+const mockDoctor = {
+  id: '1',
+  name: 'Dr. Sarah Johnson',
+  imageUrl: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&q=80&w=200&h=200',
+  specialty: 'Cardiologist',
+};
+
+const mockPatients = [
+  {
+    id: 'P001',
+    name: 'John Doe',
+    age: 45,
+    gender: 'Male',
+    lastVisit: '2024-02-15',
+    status: 'Active',
+    bloodGroup: 'A+',
+    contactNumber: '+1234567890',
+    emergencyContact: '+0987654321',
+    medicalHistory: ['Hypertension', 'Diabetes'],
+    allergies: ['Penicillin'],
+  },
+  // Add more mock patients as needed
+];
+
+const mockVitalStats = [
+  {
+    date: '2024-02-01',
+    bloodPressure: { systolic: 120, diastolic: 80 },
+    sugarLevel: 95,
+    bmi: 24.5,
+  },
+  // Add more mock vital stats as needed
+];
 
 function App() {
-  const { doctor, isAuthenticated } = useAuth();
   const [selectedPatient, setSelectedPatient] = useState<Patient | null>(null);
 
   const getGreeting = () => {
@@ -28,10 +61,6 @@ function App() {
     setSelectedPatient(null);
   };
 
-  if (!isAuthenticated) {
-    return <div>Loading...</div>; // Or a redirect to login
-  }
-
   return (
     <div className="min-h-screen bg-gray-100">
       <Header />
@@ -42,7 +71,7 @@ function App() {
           <div className="flex flex-col md:flex-row justify-between items-center bg-white rounded-lg shadow-md p-6">
             <div>
               <h1 className="text-2xl font-bold text-gray-900">
-                {getGreeting()}, Dr. {doctor?.lastName}
+                {getGreeting()}, Dr. {mockDoctor.name.split(' ')[1]}
               </h1>
               <p className="text-gray-600">Welcome to your dashboard</p>
             </div>
@@ -57,7 +86,7 @@ function App() {
             <h2 className="text-xl font-semibold mb-4">Patient Management</h2>
             <PatientSearch
               onSearch={(query) => console.log('Searching:', query)}
-              patients={[]} // Replace with actual patient data
+              patients={mockPatients}
               onSelectPatient={handlePatientSelect}
             />
           </div>
@@ -76,7 +105,7 @@ function App() {
               </div>
               <PatientDetails
                 patient={selectedPatient}
-                vitalStats={[]} // Replace with actual vital stats
+                vitalStats={mockVitalStats}
               />
             </div>
           )}

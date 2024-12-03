@@ -8,19 +8,23 @@ interface AuthPayload {
   exp: number;
 }
 
+interface Doctor {
+  id: string;
+  name: string;
+  imageUrl: string;
+  specialty: string;
+}
+
 export function useAuth() {
-  const [doctor, setDoctor] = useState<{
-    id: string;
-    name: string;
-    imageUrl: string;
-    specialty: string;
-  } | null>(null);
+  const [doctor, setDoctor] = useState<Doctor | null>(null);
 
   const logout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('doctor');
+    setDoctor(null);
     console.log('Logging out...');
-    // Redirect to login or perform other logout actions
+    // Optionally, redirect to login page
+    window.location.href = '/login';
   };
 
   useEffect(() => {
@@ -29,23 +33,22 @@ export function useAuth() {
       try {
         const decoded: AuthPayload = jwtDecode(token);
         if (decoded.role === 'doctor') {
-          // Fetch doctor details from backend if not stored
           const storedDoctor = localStorage.getItem('doctor');
           if (storedDoctor) {
             setDoctor(JSON.parse(storedDoctor));
           } else {
-            // Optionally fetch from backend
-            // Example:
-            // fetch(`https://medical-backend-l140.onrender.com/api/doctors/${decoded.id}`, {
-            //   headers: { 'Authorization': `Bearer ${token}` }
-            // })
-            //   .then(response => response.json())
-            //   .then(data => setDoctor(data))
-            //   .catch(err => console.error(err));
+            // Fetch doctor details from backend if not stored
+            fetch(`https://medical-backend-l140.onrender.com/api/doctors/${decoded.id}`, {
+              headers: { 'Authorization': `Bearer ${token}` }
+            })
+              .then(response => response.json())
+              .then(data => setDoctor(data))
+              .catch(err => console.error('Error fetching doctor data:', err));
           }
         }
       } catch (error) {
         console.error('Invalid token', error);
+        logout(); // Optional: Logout user if token is invalid
       }
     }
   }, []);

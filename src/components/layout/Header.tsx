@@ -21,15 +21,19 @@ export function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16 items-center">
           <div className="flex items-center">
-            <img
-              className="h-10 w-10 rounded-full object-cover"
-              src={doctor.imageUrl}
-              alt={doctor.name}
-            />
-            <div className="ml-4">
-              <h2 className="text-lg font-semibold text-gray-900">{doctor.name}</h2>
-              <p className="text-sm text-gray-500">{doctor.specialty}</p>
-            </div>
+            {doctor && (
+              <>
+                <img
+                  className="h-10 w-10 rounded-full object-cover"
+                  src={doctor.imageUrl}
+                  alt={doctor.name}
+                />
+                <div className="ml-4">
+                  <h2 className="text-lg font-semibold text-gray-900">{doctor.name}</h2>
+                  <p className="text-sm text-gray-500">{doctor.specialty}</p>
+                </div>
+              </>
+            )}
           </div>
 
           {/* Desktop Navigation */}
